@@ -1,5 +1,6 @@
 {
     "General": true,
     "Customer": true,
-    "Category": true
+    "Category": true,
+    "Product": true
 }
