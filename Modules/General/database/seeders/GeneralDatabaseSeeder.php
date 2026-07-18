@@ -3,6 +3,7 @@
 namespace Modules\General\Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Modules\Category\Database\Seeders\CategoryDatabaseSeeder;
 
 class GeneralDatabaseSeeder extends Seeder
 {
@@ -11,6 +12,8 @@ class GeneralDatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // $this->call([]);
+        $this->call([
+            CategoryDatabaseSeeder::class
+        ]);
     }
 }
