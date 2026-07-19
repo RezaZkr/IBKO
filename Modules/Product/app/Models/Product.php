@@ -9,11 +9,13 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Modules\Category\Models\Category;
 use Modules\General\Enums\BooleanEnum;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
 #[Fillable(['title', 'slug', 'category_id', 'description', 'status'])]
-class Product extends Model
+class Product extends Model implements HasMedia
 {
-    use SoftDeletes;
+    use SoftDeletes,InteractsWithMedia;
 
     protected function casts(): array
     {
