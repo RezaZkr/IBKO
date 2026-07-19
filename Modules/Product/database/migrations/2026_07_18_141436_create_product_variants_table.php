@@ -19,6 +19,7 @@ return new class extends Migration {
             $table->unsignedBigInteger('price')->default(0);
             $table->unsignedInteger('quantity')->default(0);
             $table->unsignedTinyInteger('status')->default(BooleanEnum::INACTIVE);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

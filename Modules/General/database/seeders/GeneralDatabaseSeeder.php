@@ -3,7 +3,9 @@
 namespace Modules\General\Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Modules\Attribute\Database\Seeders\AttributeDatabaseSeeder;
 use Modules\Category\Database\Seeders\CategoryDatabaseSeeder;
+use Modules\Product\Database\Seeders\ProductDatabaseSeeder;
 
 class GeneralDatabaseSeeder extends Seeder
 {
@@ -13,7 +15,9 @@ class GeneralDatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([
-            CategoryDatabaseSeeder::class
+            CategoryDatabaseSeeder::class,
+            AttributeDatabaseSeeder::class,
+            ProductDatabaseSeeder::class,
         ]);
     }
 }
