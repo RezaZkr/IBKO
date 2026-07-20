@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Modules\Customer\Models\Customer;
 use Modules\Order\Exceptions\InsufficientStockException;
 use Modules\Order\Exceptions\VariantUnavailableException;
-use Modules\Order\Http\Requests\OrderStoreRequest;
+use Modules\Order\Http\Requests\Api\OrderStoreRequest;
 use Modules\Order\Services\OrderService;
 use Modules\Order\Transformers\Api\OrderResource;
 use Symfony\Component\HttpFoundation\Response as ResponseAlias;

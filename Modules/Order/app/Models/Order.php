@@ -11,6 +11,7 @@ use Modules\Customer\Models\Customer;
 use Modules\Order\Enums\OrderPaymentStatusEnum;
 use Modules\Order\Enums\OrderStatusEnum;
 use Modules\Order\Observers\OrderObserver;
+use Modules\Payment\Models\Payment;
 
 #[
     ObservedBy(OrderObserver::class),
@@ -35,5 +36,10 @@ class Order extends Model
     public function items(): HasMany
     {
         return $this->hasMany(OrderItem::class);
+    }
+
+    public function payments(): HasMany
+    {
+        return $this->hasMany(Payment::class);
     }
 }

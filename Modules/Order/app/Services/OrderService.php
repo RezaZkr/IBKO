@@ -4,6 +4,8 @@ namespace Modules\Order\Services;
 
 use Illuminate\Support\Facades\DB;
 use Modules\Customer\Models\Customer;
+use Modules\Order\Enums\OrderPaymentStatusEnum;
+use Modules\Order\Enums\OrderStatusEnum;
 use Modules\Order\Exceptions\InsufficientStockException;
 use Modules\Order\Exceptions\VariantUnavailableException;
 use Modules\Order\Models\Order;
@@ -85,5 +87,27 @@ class OrderService
         }
 
         return $result;
+    }
+
+    public function confirmPayment(Order $order): void
+    {
+        DB::transaction(function () use ($order) {
+            foreach ($order->items as $item) {
+                if (! $item->product_variant_id) continue;
+
+                $variant = ProductVariant::query()
+                    ->where('id', $item->product_variant_id)
+                    ->lockForUpdate()
+                    ->first();
+
+                $variant?->decrement('quantity', $item->quantity);
+            }
+
+            $order->update([
+                'payment_status' => OrderPaymentStatusEnum::Paid,
+                'status' => OrderStatusEnum::Processing,
+                'paid_at' => now(),
+            ]);
+        });
     }
 }

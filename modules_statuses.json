@@ -4,5 +4,6 @@
     "Category": true,
     "Product": true,
     "Attribute": true,
-    "Order": true
+    "Order": true,
+    "Payment": true
 }
