@@ -13,6 +13,9 @@ class ProductDatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        $fakeImagePath = __DIR__ . '\\fake_img.jpg';
+        $fakeVideoPath = __DIR__ . '\\fake_video.mp4';
+
         $products = [
             [
                 'title'       => 'مبل راحتی الیزه',
@@ -249,6 +252,17 @@ class ProductDatabaseSeeder extends Seeder
                         ];
                     }
                     $variantModel->attributeValues()->sync($variantAttributeValues);
+
+                    $variantModel->media()->delete();
+                    $variantModel->addMedia($fakeImagePath)
+                        ->preservingOriginal()
+                        ->usingFileName(Str::random(10) . '.jpg')
+                        ->toMediaCollection('images');
+                    $variantModel->addMedia($fakeVideoPath)
+                        ->preservingOriginal()
+                        ->usingFileName(Str::random(10) . '.mp4')
+                        ->toMediaCollection('videos');
+
                 }
             } catch (\Throwable $exception) {
                 continue;

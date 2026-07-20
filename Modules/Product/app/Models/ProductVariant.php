@@ -25,4 +25,13 @@ class ProductVariant extends Model implements HasMedia
     {
         return $this->belongsToMany(AttributeValue::class, 'product_variant_attribute_value', 'product_variant_id', 'attribute_value_id');
     }
+
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('images')
+            ->acceptsMimeTypes(['image/jpeg', 'image/png', 'image/webp']);
+
+        $this->addMediaCollection('videos')
+            ->acceptsMimeTypes(['video/mp4', 'video/webm']);
+    }
 }

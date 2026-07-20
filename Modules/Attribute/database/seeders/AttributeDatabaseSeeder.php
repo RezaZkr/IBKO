@@ -16,24 +16,30 @@ class AttributeDatabaseSeeder extends Seeder
     {
         $data = [
             [
-                'name'        => 'رنگ',
+                'name'        => 'color',
                 'select_type' => AttributeSelectTypeEnum::RadioButton,
                 'filterable'  => BooleanEnum::ACTIVE,
                 'values'      => [
                     [
                         'name'  => 'قرمز',
                         'value' => '#fc2c03'
-                    ], [
+                    ],
+                    [
                         'name'  => 'سبز',
                         'value' => '#03fc84'
-                    ], [
+                    ],
+                    [
                         'name'  => 'آبی',
                         'value' => '#03a9fc'
-                    ]
+                    ],
+                    [
+                        'name'  => 'بنفش',
+                        'value' => '#5c0a8f'
+                    ],
                 ]
             ],
             [
-                'name'        => 'جنس',
+                'name'        => 'material',
                 'select_type' => AttributeSelectTypeEnum::Select,
                 'filterable'  => BooleanEnum::ACTIVE,
                 'values'      => [
@@ -52,7 +58,7 @@ class AttributeDatabaseSeeder extends Seeder
                 ]
             ],
             [
-                'name'        => 'اندازه',
+                'name'        => 'size',
                 'select_type' => AttributeSelectTypeEnum::Select,
                 'filterable'  => BooleanEnum::ACTIVE,
                 'values'      => [

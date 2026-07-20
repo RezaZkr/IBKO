@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\User;
 use Modules\Customer\Models\Customer;
 
 return [
