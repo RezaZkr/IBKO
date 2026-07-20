@@ -1,58 +1,107 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# فقط فایل readme.md توسط ai جنریت شده است.
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+# Product Management API
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
-
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
-
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
-
-## Learning Laravel
-
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
-
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
-
-## Agentic Development
-
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+## 📦 روش اجرای پروژه
 
 ```bash
-composer require laravel/boost --dev
+# ۱. نصب پکیج‌های PHP
+composer install
 
-php artisan boost:install
+# ۲. کپی فایل env و تنظیم مقادیر دیتابیس
+cp .env.example .env
+php artisan key:generate
+
+# ۳. اجرای Migration ها
+php artisan migrate
+
+# ۴. ایجاد داده نمونه (Seeder)
+php artisan db:seed
+
+# ۵. اجرای پروژه
+php artisan serve
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+پس از اجرا، پروژه روی آدرس زیر در دسترس خواهد بود:
 
-## Contributing
+```
+http://localhost:8000
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### Endpoint های اصلی
 
-## Code of Conduct
+| Method | Endpoint                | توضیح                          |
+|--------|--------------------------|---------------------------------|
+| GET    | `/api/products`         | دریافت لیست محصولات             |
+| GET    | `/api/products/{id}`    | دریافت جزئیات یک محصول          |
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+> در صورت نیاز به تست، می‌توانید از Postman یا مشابه آن با آدرس‌های فوق استفاده کنید.
+> داکیومنت Swagger در آدرس زیر در دسترس است:
+> `http://localhost:8000/docs/api#/`
+---
 
-## Security Vulnerabilities
+## 🏗 ساختار کلی پروژه
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+ساختار پروژه به‌صورت **ماژولار (Modular)** پیاده‌سازی شده است؛ به این معنا که هر بخش کاری (مثلاً Products) منطق مربوط به خودش (Controller، Model، Service، Request، Resource و...) را در یک ماژول مجزا نگه می‌دارد، به‌جای پخش‌شدن کد در ساختار پیش‌فرض و متمرکز Laravel. مزیت این رویکرد:
 
-## License
+- جداسازی بهتر مسئولیت‌ها (Separation of Concerns)
+- افزودن قابلیت‌های جدید بدون درگیرشدن با سایر بخش‌ها
+- خوانایی و نگه‌داری بهتر کد در پروژه‌های بزرگ‌تر
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+نمای کلی (نمونه):
+
+```
+
+Modules/
+      └── Product/
+           ├── Controllers/
+           ├── Models/
+           ├── Requests/
+           database/
+            ├── migrations/
+            └── seeders/
+           routes/
+            └── api.php
+```
+---
+
+## 🧩 فرضیات انجام‌شده
+
+- فرض شده است که دسترسی به API نیازی به احراز هویت (Authentication) برای بخش نمایش محصولات ندارد.
+- داده‌های نمونه صرفاً برای نمایش عملکرد API تولید شده‌اند و بازتاب‌دهنده داده واقعی نیستند.
+- فرض شده محیط اجرا لوکال (Local) است و نیازی به تنظیمات خاص production (مثل HTTPS، Queue Worker و...) نبوده است.
+
+---
+
+## ⚠️ محدودیت‌های پیاده‌سازی
+
+- عدم نوشتن تست (Unit/Feature) به‌دلیل محدودیت زمانی.
+- بخش سفارشات (Orders) و پرداخت (Payment) که نیازمند Guard اختصاصی Customer بود، پیاده‌سازی نشده است.
+- Validation و مدیریت خطا (Error Handling) در سطح پایه پیاده‌سازی شده و می‌تواند کامل‌تر شود.
+- عدم استفاده از Caching برای بهبود سرعت پاسخ‌دهی.
+
+---
+
+## ⏳ بخش‌هایی که به‌دلیل محدودیت زمانی انجام نشده‌اند
+
+- **بخش سفارشات و پرداخت**: گارد کاستومر (Customer Guard) برای این بخش طراحی شده بود، اما به‌دلیل محدودیت زمانی، پیاده‌سازی کامل سفارشات و فرآیند پرداخت انجام نشد.
+- نوشتن تست‌های خودکار (Automated Tests).
+
+---
+
+## 🚀 تغییرات پیشنهادی برای استفاده در مقیاس بزرگ‌تر
+
+- افزودن **تست‌های Unit و Feature** برای اطمینان از پایداری کد در توسعه‌های آینده.
+- استفاده از **Caching** (مانند Redis) برای درخواست‌های پرتکرار روی محصولات.
+- پیاده‌سازی **Queue** برای عملیات سنگین یا وابسته به سرویس‌های خارجی (مثل پرداخت).
+- افزودن **Rate Limiting** و **Authentication/Authorization** کامل (مثلاً با Laravel Sanctum یا Passport).
+- استفاده از **CI/CD Pipeline** برای اجرای خودکار تست‌ها و Deployment.
+- مانیتورینگ و Logging متمرکز (مانند Sentry، ELK Stack) برای رصد خطاها در Production.
+
+---
+
+## 📌 نکته پایانی
+
+این پروژه به‌عنوان تسک مصاحبه فنی (Technical Interview Task) و در بازه زمانی محدود پیاده‌سازی شده است. موارد ذکرشده در بخش «محدودیت‌ها» و «تغییرات پیشنهادی» نشان‌دهنده آگاهی از نکاتی است که در یک محیط Production واقعی باید مدنظر قرار گیرد.
