@@ -29,40 +29,14 @@ class ProductDatabaseSeeder extends Seeder
                         'price'            => 32500000,
                         'quantity'         => 8,
                         'status'           => true,
-                        'attribute_values' => [
-                            [
-                                'id'           => 1,
-                                'attribute_id' => 1,
-                            ],
-                            [
-                                'id'           => 4,
-                                'attribute_id' => 2,
-                            ],
-                            [
-                                'id'           => 7,
-                                'attribute_id' => 3,
-                            ],
-                        ]
+                        'attribute_values' => [1, 5, 8]
                     ],
                     [
                         'sku'              => 'ELZ-002',
                         'price'            => 34900000,
                         'quantity'         => 5,
                         'status'           => true,
-                        'attribute_values' => [
-                            [
-                                'id'           => 2,
-                                'attribute_id' => 1,
-                            ],
-                            [
-                                'id'           => 5,
-                                'attribute_id' => 2,
-                            ],
-                            [
-                                'id'           => 8,
-                                'attribute_id' => 3,
-                            ],
-                        ]
+                        'attribute_values' => [2, 5, 8]
                     ],
                 ]
             ],
@@ -78,20 +52,7 @@ class ProductDatabaseSeeder extends Seeder
                         'price'            => 48500000,
                         'quantity'         => 3,
                         'status'           => true,
-                        'attribute_values' => [
-                            [
-                                'id'           => 3,
-                                'attribute_id' => 1,
-                            ],
-                            [
-                                'id'           => 6,
-                                'attribute_id' => 2,
-                            ],
-                            [
-                                'id'           => 9,
-                                'attribute_id' => 3,
-                            ],
-                        ]
+                        'attribute_values' => [3, 6, 9]
                     ],
                 ]
             ],
@@ -107,40 +68,14 @@ class ProductDatabaseSeeder extends Seeder
                         'price'            => 28900000,
                         'quantity'         => 6,
                         'status'           => true,
-                        'attribute_values' => [
-                            [
-                                'id'           => 1,
-                                'attribute_id' => 1,
-                            ],
-                            [
-                                'id'           => 5,
-                                'attribute_id' => 2,
-                            ],
-                            [
-                                'id'           => 7,
-                                'attribute_id' => 3,
-                            ],
-                        ]
+                        'attribute_values' => [1, 5, 10]
                     ],
                     [
                         'sku'              => 'NIK-002',
                         'price'            => 31500000,
                         'quantity'         => 4,
                         'status'           => true,
-                        'attribute_values' => [
-                            [
-                                'id'           => 3,
-                                'attribute_id' => 1,
-                            ],
-                            [
-                                'id'           => 4,
-                                'attribute_id' => 2,
-                            ],
-                            [
-                                'id'           => 9,
-                                'attribute_id' => 3,
-                            ],
-                        ]
+                        'attribute_values' => [3, 6, 9]
                     ],
                 ]
             ],
@@ -156,20 +91,7 @@ class ProductDatabaseSeeder extends Seeder
                         'price'            => 55900000,
                         'quantity'         => 2,
                         'status'           => true,
-                        'attribute_values' => [
-                            [
-                                'id'           => 1,
-                                'attribute_id' => 1,
-                            ],
-                            [
-                                'id'           => 4,
-                                'attribute_id' => 2,
-                            ],
-                            [
-                                'id'           => 7,
-                                'attribute_id' => 3,
-                            ],
-                        ]
+                        'attribute_values' => [1, 6, 8]
                     ],
                 ]
             ],
@@ -185,40 +107,14 @@ class ProductDatabaseSeeder extends Seeder
                         'price'            => 78000000,
                         'quantity'         => 2,
                         'status'           => true,
-                        'attribute_values' => [
-                            [
-                                'id'           => 1,
-                                'attribute_id' => 1,
-                            ],
-                            [
-                                'id'           => 5,
-                                'attribute_id' => 2,
-                            ],
-                            [
-                                'id'           => 7,
-                                'attribute_id' => 3,
-                            ],
-                        ]
+                        'attribute_values' => [2, 5, 9]
                     ],
                     [
                         'sku'              => 'ROY-002',
                         'price'            => 84500000,
                         'quantity'         => 1,
                         'status'           => true,
-                        'attribute_values' => [
-                            [
-                                'id'           => 2,
-                                'attribute_id' => 1,
-                            ],
-                            [
-                                'id'           => 4,
-                                'attribute_id' => 2,
-                            ],
-                            [
-                                'id'           => 9,
-                                'attribute_id' => 3,
-                            ],
-                        ]
+                        'attribute_values' => [2, 7, 8]
                     ],
                 ]
             ],
@@ -236,6 +132,7 @@ class ProductDatabaseSeeder extends Seeder
                 ]);
 
                 $model->attributes()->sync($product['attributes']);
+                $model->variants()->forceDelete();
 
                 foreach ($product['variants'] as $variant) {
                     $variantModel = $model->variants()->updateOrCreate([
@@ -245,13 +142,7 @@ class ProductDatabaseSeeder extends Seeder
                         'status'   => $variant['status'],
                     ]);
 
-                    $variantAttributeValues = [];
-                    foreach ($variant['attribute_values'] as $attributeValue) {
-                        $variantAttributeValues[$attributeValue['id']] = [
-                            'attribute_id' => $attributeValue['attribute_id'],
-                        ];
-                    }
-                    $variantModel->attributeValues()->sync($variantAttributeValues);
+                    $variantModel->attributeValues()->sync($variant['attribute_values']);
 
                     $variantModel->media()->delete();
                     $variantModel->addMedia($fakeImagePath)
