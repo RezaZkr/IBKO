@@ -1,6 +1,7 @@
 <?php
 
 use Dedoc\Scramble\Http\Middleware\RestrictedDocsAccess;
+use Modules\General\Scramble\ApiResponseMacroExtension;
 
 return [
     /*
@@ -18,13 +19,13 @@ return [
      * Multiple includes or wildcards → server defaults to / and paths stay full (/api/users).
      * Override with `servers`, or use Scramble::registerApi() for separate bases.
      */
-    'api_path' => 'api',
+    'api_path'    => 'api',
 
     /*
      * Your API domain. By default, app domain is used. This is also a part of the default API routes
      * matcher, so when implementing your own, make sure you use this config if needed.
      */
-    'api_domain' => null,
+    'api_domain'  => null,
 
     /*
      * The path where your OpenAPI specification will be exported.
@@ -36,8 +37,8 @@ return [
      *
      * Use `scramble:cache` to warm the cache and `scramble:clear` to invalidate it.
      */
-    'cache' => [
-        'key' => 'scramble.openapi',
+    'cache'       => [
+        'key'   => 'scramble.openapi',
         'store' => 'file',
     ],
 
@@ -45,7 +46,7 @@ return [
         /*
          * API version.
          */
-        'version' => env('API_VERSION', '0.0.1'),
+        'version'     => env('API_VERSION', '0.0.1'),
 
         /*
          * Description rendered on the home page of the API documentation (`/docs/api`).
@@ -59,32 +60,32 @@ return [
 
     'renderer' => 'elements',
 
-    'renderers' => [
+    'renderers'                       => [
         /*
          * Stoplight Elements config options: https://docs.stoplight.io/docs/elements/b074dc47b2826-elements-configuration-options
          */
         'elements' => [
-            'view' => 'scramble::docs',
-            'theme' => 'light',
-            'hideTryIt' => false,
-            'hideSchemas' => false,
-            'logo' => '',
+            'view'                   => 'scramble::docs',
+            'theme'                  => 'light',
+            'hideTryIt'              => false,
+            'hideSchemas'            => false,
+            'logo'                   => '',
             'tryItCredentialsPolicy' => 'include',
-            'layout' => 'responsive',
-            'router' => 'hash',
+            'layout'                 => 'responsive',
+            'router'                 => 'hash',
         ],
         /*
          * Scalar API reference config options: https://scalar.com/products/api-references/configuration
          */
-        'scalar' => [
-            'view' => 'scramble::scalar',
-            'cdn' => 'https://cdn.jsdelivr.net/npm/@scalar/api-reference',
-            'theme' => 'laravel',
-            'proxyUrl' => 'https://proxy.scalar.com',
-            'darkMode' => false,
+        'scalar'   => [
+            'view'               => 'scramble::scalar',
+            'cdn'                => 'https://cdn.jsdelivr.net/npm/@scalar/api-reference',
+            'theme'              => 'laravel',
+            'proxyUrl'           => 'https://proxy.scalar.com',
+            'darkMode'           => false,
             'showDeveloperTools' => 'never',
-            'agent' => ['disabled' => true],
-            'credentials' => 'include',
+            'agent'              => ['disabled' => true],
+            'credentials'        => 'include',
         ],
     ],
 
@@ -102,7 +103,7 @@ return [
      * ],
      * ```
      */
-    'servers' => null,
+    'servers'                         => null,
 
     /**
      * Determines how Scramble stores the descriptions of enum cases.
@@ -110,7 +111,7 @@ return [
      * - 'description' – Case descriptions are stored as the enum schema's description using table formatting.
      * - 'extension' – Case descriptions are stored in the `x-enumDescriptions` enum schema extension.
      *
-     *    @see https://redocly.com/docs-legacy/api-reference-docs/specification-extensions/x-enum-descriptions
+     * @see https://redocly.com/docs-legacy/api-reference-docs/specification-extensions/x-enum-descriptions
      * - false - Case descriptions are ignored.
      */
     'enum_cases_description_strategy' => 'description',
@@ -122,7 +123,7 @@ return [
      * - 'varnames' - Case names are stored in the `x-enum-varnames` enum schema extension.
      * - false - Case names are not stored.
      */
-    'enum_cases_names_strategy' => false,
+    'enum_cases_names_strategy'       => false,
 
     /**
      * When Scramble encounters deep objects in query parameters, it flattens the parameters so the generated
@@ -138,14 +139,16 @@ return [
      * When `flatten_deep_query_parameters` is `false`, Scramble will document the parameter like so:
      *  `{"name":"foo", "schema": {"type":"object", "properties":{"bar":{"type": "int"}}, "required": ["bar"]}, "required":true}`.
      */
-    'flatten_deep_query_parameters' => true,
+    'flatten_deep_query_parameters'   => true,
 
     'middleware' => [
         'web',
         RestrictedDocsAccess::class,
     ],
 
-    'extensions' => [],
+    'extensions'        => [
+        ApiResponseMacroExtension::class
+    ],
 
     /*
      * Automatically document API security (OpenAPI `security` / `securitySchemes`) based on route

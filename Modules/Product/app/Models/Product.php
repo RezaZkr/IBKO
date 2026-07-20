@@ -4,6 +4,8 @@ namespace Modules\Product\Models;
 
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Scope;
+use Illuminate\Database\Eloquent\Attributes\UseFactory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -12,6 +14,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Modules\Attribute\Models\Attribute;
 use Modules\Category\Models\Category;
 use Modules\General\Enums\BooleanEnum;
+use Modules\Product\Database\Factories\ProductFactory;
 use Modules\Product\Filters\QueryFilters;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -19,9 +22,10 @@ use Illuminate\Database\Eloquent\Builder;
 
 
 #[Fillable(['title', 'slug', 'category_id', 'description', 'status'])]
+#[UseFactory(ProductFactory::class)]
 class Product extends Model implements HasMedia
 {
-    use SoftDeletes, InteractsWithMedia;
+    use SoftDeletes, InteractsWithMedia, HasFactory;
 
     protected function casts(): array
     {

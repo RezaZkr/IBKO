@@ -3,18 +3,22 @@
 namespace Modules\Product\Models;
 
 use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Attributes\UseFactory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Modules\Attribute\Models\AttributeValue;
+use Modules\Product\Database\Factories\ProductVariantFactory;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
 #[Fillable(['product_id', 'sku', 'price', 'quantity', 'status'])]
+#[UseFactory(ProductVariantFactory::class)]
 class ProductVariant extends Model implements HasMedia
 {
-    use SoftDeletes,InteractsWithMedia;
+    use SoftDeletes, InteractsWithMedia, HasFactory;
 
     public function product(): BelongsTo
     {
