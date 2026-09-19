@@ -93,7 +93,7 @@ class OrderService
     {
         DB::transaction(function () use ($order) {
             foreach ($order->items as $item) {
-                if (! $item->product_variant_id) continue;
+                if (!$item->product_variant_id) continue;
 
                 $variant = ProductVariant::query()
                     ->where('id', $item->product_variant_id)
@@ -105,7 +105,7 @@ class OrderService
 
             $order->update([
                 'payment_status' => OrderPaymentStatusEnum::Paid,
-                'status' => OrderStatusEnum::Processing,
+                'status'  => OrderStatusEnum::Processing,
                 'paid_at' => now(),
             ]);
         });
