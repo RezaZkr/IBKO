@@ -49,7 +49,7 @@ class PaymentController extends Controller
 
         logger([
             'status' => $payment->status->label(),
-            'value' => $status,
+            'value'  => $status,
         ]);
 
         return redirect()->away("{$frontendUrl}/orders/{$payment->order->order_number}/result?payment_status={$status}");
