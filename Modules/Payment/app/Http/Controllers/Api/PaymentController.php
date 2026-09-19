@@ -4,6 +4,7 @@ namespace Modules\Payment\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Modules\General\Enums\GuardEnum;
 use Modules\Order\Models\Order;
 use Modules\Payment\Exceptions\OrderNotPayableException;
 use Modules\Payment\Models\Payment;
@@ -20,7 +21,7 @@ class PaymentController extends Controller
     {
         $order = Order::query()
             ->where('order_number', $number)
-//            ->where('customer_id', auth()->guard(GuardEnum::CUSTOMER)->id())//todo check user can pay own orders
+            ->where('customer_id', auth()->guard(GuardEnum::CUSTOMER)->id())
             ->firstOrFail();
         try {
             $payment = $this->paymentService->initiate($order);
