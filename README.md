@@ -1,5 +1,3 @@
-# فقط فایل readme.md توسط ai جنریت شده است.
-
 # Product Management API
 
 ---
