@@ -105,8 +105,8 @@ class OrderService
 
             $order->update([
                 'payment_status' => OrderPaymentStatusEnum::Paid,
-                'status'  => OrderStatusEnum::Processing,
-                'paid_at' => now(),
+                'status'         => OrderStatusEnum::Processing,
+                'paid_at'        => now(),
             ]);
         });
     }
